@@ -39,7 +39,7 @@ export class CreatePiggyBankComponent implements OnInit {
   }
 
   onSubmit() {
-    
+    console.log(this.createPiggyBankForm.value);
   }
 
   private createForm() {
