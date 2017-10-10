@@ -16,7 +16,7 @@ import { Store } from '@ngrx/store';
 
       <div class="form-group">
         <label for="amount">Starting Amount</label>
-        <input type="number" class="form-control" formControlName="startingAmount" />
+        <input type="number" class="form-control" formControlName="amount" />
       </div>
 
       <div class="form-group">
@@ -44,7 +44,7 @@ export class CreatePiggyBankComponent implements OnInit {
 
         const piggyBank: PiggyBank = {
             name: formValue.name,
-            startingAmount: formValue.startingAmount,
+            amount: formValue.amount,
             goal: formValue.goal
         }
 
@@ -59,7 +59,7 @@ export class CreatePiggyBankComponent implements OnInit {
     private createForm() {
         this.createPiggyBankForm = this.fb.group({
             name: ['', Validators.required],
-            startingAmount: ['', Validators.required],
+            amount: ['', Validators.required],
             goal: ''
         });
     }

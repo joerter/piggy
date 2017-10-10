@@ -1,5 +1,5 @@
 export interface PiggyBank {
     name: string;
-    startingAmount: number;
+    amount: number;
     goal?: number;
 }
