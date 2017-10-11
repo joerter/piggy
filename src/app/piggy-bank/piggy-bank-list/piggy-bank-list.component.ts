@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 @Component({
     selector: 'piggy-bank-list',
     template: `
-        <div class="card" *ngFor="let piggyBank of piggyBanks$ | async">
+        <div class="card mb-3" *ngFor="let piggyBank of piggyBanks$ | async">
             <h4 class="card-title text-center">{{piggyBank.name}}</h4>
 
             <h2 class="text-center">{{piggyBank.amount | currency:'USD':true}}</h2>

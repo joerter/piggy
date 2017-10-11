@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 @Component({
     selector: 'create-piggy-bank',
     template: `
+    <h5>Create New Piggy Bank</h5>
     <form [formGroup]="createPiggyBankForm" novalidate (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Name</label>
@@ -46,7 +47,7 @@ export class CreatePiggyBankComponent implements OnInit {
             name: formValue.name,
             amount: formValue.amount,
             goal: formValue.goal
-        }
+        };
 
         this.store.dispatch({
             type: CREATE_PIGGY_BANK,
