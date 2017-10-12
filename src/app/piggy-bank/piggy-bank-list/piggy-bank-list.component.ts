@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 
             <div class="progress" *ngIf="piggyBank.goal > 0">
                 <div
-                    class="progress-bar" 
+                    class="progress-bar"
                     role="progressbar"
                     [attr.aria-valuenow]="piggyBank.amount"
                     aria-valuemin="0"

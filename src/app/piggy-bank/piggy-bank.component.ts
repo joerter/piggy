@@ -8,6 +8,6 @@ import { Component, OnInit } from '@angular/core';
       <hr/>
 
       <create-piggy-bank></create-piggy-bank>
-    ` 
+    `
 })
 export class PiggyBankComponent {}

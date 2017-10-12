@@ -7,13 +7,15 @@ import { PiggyBankListComponent } from './piggy-bank/piggy-bank-list/piggy-bank-
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { piggyBankReducer } from './piggy-bank/piggy-bank.reducer';
+import { BudgetComponent } from './budget/budget.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PiggyBankComponent,
     CreatePiggyBankComponent,
-    PiggyBankListComponent
+    PiggyBankListComponent,
+    BudgetComponent
   ],
   imports: [
     BrowserModule,
