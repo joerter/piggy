@@ -10,6 +10,14 @@ import { BudgetItem } from './budget-item.model';
         <div class="col-md-6">
             <h2>Income</h2>
 
+            <div class="card mb-2" *ngIf="incomeItems.length > 0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let incomeItem of incomeItems">
+                        {{incomeItem.name}} - {{incomeItem.amount}}
+                    </li>
+                </ul>
+            </div>
+
             <div class="d-flex justify-content-center">
                 <form [formGroup]="addIncomeForm" (ngSubmit)="onSubmit()" novalidate class="form-inline">
                     <input type="text" class="form-control mr-2" placeholder="Name" formControlName="name" />
