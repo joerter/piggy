@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BudgetItem } from '../budget-item.model';
 
 @Component({
-    selector: 'app-add-budget-item',
+    selector: 'add-budget-item',
     template: `
-    <form [formGroup]="addIncomeForm" (ngSubmit)="onSubmit()" novalidate class="form-inline">
+    <form [formGroup]="addBudgetItemForm" (ngSubmit)="onSubmit()" novalidate class="form-inline">
         <input type="text" class="form-control mr-2" placeholder="Name" formControlName="name" />
         <input type="number" class="form-control mr-2" placeholder="Amount" formControlName="amount" />
 
         <button type="submit" class="btn btn-secondary">Add</button>
     </form>
   `,
-    styles: []
+    styles: [],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddBudgetItemComponent implements OnInit {
-    addIncomeForm: FormGroup;
+    addBudgetItemForm: FormGroup;
+    @Output() itemAdded = new EventEmitter<BudgetItem>();
 
     constructor(private fb: FormBuilder) {}
 
@@ -25,17 +27,18 @@ export class AddBudgetItemComponent implements OnInit {
     }
 
     onSubmit() {
-        const formValue = this.addIncomeForm.value;
+        const formValue = this.addBudgetItemForm.value;
         const incomeItem: BudgetItem = {
             name: formValue.name,
             amount: formValue.amount
         };
 
-        this.addIncomeForm.reset();
+        this.itemAdded.emit(incomeItem);
+        this.addBudgetItemForm.reset();
     }
     
     private createForm() {
-        this.addIncomeForm = this.fb.group({
+        this.addBudgetItemForm = this.fb.group({
             name: ['', Validators.required],
             amount: ['', Validators.required]
         });
