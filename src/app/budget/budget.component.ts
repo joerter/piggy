@@ -1,9 +1,9 @@
+import { BudgetItem, BudgetItemType } from './budget-item.model';
 import { Component, OnInit } from '@angular/core';
+import { Store, createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { BudgetItem } from './budget-item.model';
 import { CREATE_BUDGET_ITEM } from './budget-item.reducer';
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'budget',
@@ -20,6 +20,12 @@ import { Store } from '@ngrx/store';
         </div>
         <div class="col-md-6">
             <h2>Expenses</h2>
+
+            <budget-item-list [budgetItems]="expenseItems$ | async"></budget-item-list>
+
+            <div class="d-flex justify-content-center">
+                <add-budget-item (itemAdded)="onExpenseItemAdded($event)"></add-budget-item>
+            </div>
         </div>
     </div>
   `,
@@ -31,17 +37,31 @@ import { Store } from '@ngrx/store';
 })
 export class BudgetComponent implements OnInit {
     incomeItems$: Observable<BudgetItem>;
+    expenseItems$: Observable<BudgetItem>;
+
+    stuff: Observable<any>;
 
     constructor(private store: Store<any>) {}
 
     ngOnInit() {
-        this.incomeItems$ = this.store.select('budgetItemReducer');
+        const selectBudgetItems = createFeatureSelector<BudgetItem>('budgetItem');
+        const selectIncomeBudgetItems = createSelector(selectBudgetItems, (state: BudgetItem) => state.type);
+        const budgetItems = this.store.select(selectIncomeBudgetItems);
     }
 
-    onIncomeItemAdded(incomeItem: BudgetItem) {
+    onIncomeItemAdded(budgetItem: BudgetItem) {
+        const incomeItem = { ...budgetItem, type: BudgetItemType.Income };
         this.store.dispatch({
             type: CREATE_BUDGET_ITEM,
             payload: incomeItem
+        });
+    }
+
+    onExpenseItemAdded(budgetItem: BudgetItem) {
+        const expenseItem = { ...budgetItem, type: BudgetItemType.Expense };
+        this.store.dispatch({
+            type: CREATE_BUDGET_ITEM,
+            payload: expenseItem
         });
     }
 }

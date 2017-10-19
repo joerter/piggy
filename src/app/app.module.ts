@@ -25,7 +25,7 @@ import { piggyBankReducer } from './piggy-bank/piggy-bank.reducer';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ piggyBankReducer, budgetItemReducer })
+    StoreModule.forRoot({ piggyBank: piggyBankReducer, budgetItem: budgetItemReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

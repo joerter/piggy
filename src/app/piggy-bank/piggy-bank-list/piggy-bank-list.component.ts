@@ -33,6 +33,6 @@ export class PiggyBankListComponent implements OnInit {
     constructor(private store: Store<any>) {}
 
     ngOnInit() {
-        this.piggyBanks$ = this.store.select('piggyBankReducer');
+        this.piggyBanks$ = this.store.select('piggyBank');
     }
 }
