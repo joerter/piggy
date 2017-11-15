@@ -5,6 +5,7 @@ import { Store, createFeatureSelector, createSelector } from '@ngrx/store';
 import { CREATE_BUDGET_ITEM } from './budget-item.reducer';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'budget',
@@ -37,18 +38,15 @@ import 'rxjs/add/operator/filter';
     ]
 })
 export class BudgetComponent implements OnInit {
-    expenseItems$: Observable<BudgetItem[]> = Observable.of([]);
-    incomeItems$: Observable<BudgetItem[]> = Observable.of([]);
+    expenseItems$: Observable<BudgetItem[]>;
+    incomeItems$: Observable<BudgetItem[]>;
 
     constructor(private store: Store<any>) {}
 
     ngOnInit() {
         const budgetItems$ = this.store.select('budgetItem');
-        budgetItems$.subscribe(item => console.log(item));
-        budgetItems$.filter(item => item.type === BudgetItemType.Expense);
-        budgetItems$.filter(item => item.type === BudgetItemType.Income).subscribe((item) => {
-            console.log(item);
-        });
+        this.incomeItems$ = budgetItems$.map(budgetItems => budgetItems.filter(b => b.type === BudgetItemType.Income));
+        this.expenseItems$ = budgetItems$.map(budgetItems => budgetItems.filter(b => b.type === BudgetItemType.Expense));
     }
 
     onIncomeItemAdded(budgetItem: BudgetItem) {
