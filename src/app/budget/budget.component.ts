@@ -19,6 +19,8 @@ import 'rxjs/add/operator/map';
             <div class="d-flex justify-content-center">
                 <add-budget-item (itemAdded)="onIncomeItemAdded($event)"></add-budget-item>
             </div>
+
+            <h3> Total: {{totalIncome | async | currency:'USD':true}}</h3>
         </div>
         <div class="col-md-6">
             <h2>Expenses</h2>
@@ -28,6 +30,8 @@ import 'rxjs/add/operator/map';
             <div class="d-flex justify-content-center">
                 <add-budget-item (itemAdded)="onExpenseItemAdded($event)"></add-budget-item>
             </div>
+
+            <h3>Total: {{totalExpenses | async | currency:'USD':true}}</h3>
         </div>
     </div>
   `,
@@ -47,6 +51,14 @@ export class BudgetComponent implements OnInit {
         const budgetItems$ = this.store.select('budgetItem');
         this.incomeItems$ = budgetItems$.map(budgetItems => budgetItems.filter(b => b.type === BudgetItemType.Income));
         this.expenseItems$ = budgetItems$.map(budgetItems => budgetItems.filter(b => b.type === BudgetItemType.Expense));
+    }
+
+    get totalIncome(): Observable<number> {
+        return this.incomeItems$.map(items => items.reduce((sum, item) => sum + item.amount, 0));
+    }
+
+    get totalExpenses(): Observable<number> {
+        return this.expenseItems$.map(items => items.reduce((sum, item) => sum + item.amount, 0));
     }
 
     onIncomeItemAdded(budgetItem: BudgetItem) {
