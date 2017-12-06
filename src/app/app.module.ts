@@ -3,29 +3,21 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BudgetComponent } from './budget/budget.component';
 import { BudgetItemListComponent } from './budget/budget-item-list/budget-item-list.component';
-import { CreatePiggyBankComponent } from './piggy-bank/create-piggy-bank/create-piggy-bank.component';
+import { BudgetModule } from './budget/budget.module';
 import { NgModule } from '@angular/core';
-import { PiggyBankComponent } from './piggy-bank/piggy-bank.component';
-import { PiggyBankListComponent } from './piggy-bank/piggy-bank-list/piggy-bank-list.component';
+import { PiggyBankModule } from './piggy-bank/piggy-bank.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { budgetItemReducer } from './budget/budget-item.reducer';
-import { piggyBankReducer } from './piggy-bank/piggy-bank.reducer';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PiggyBankComponent,
-    CreatePiggyBankComponent,
-    PiggyBankListComponent,
-    BudgetComponent,
-    AddBudgetItemComponent,
-    BudgetItemListComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ piggyBank: piggyBankReducer, budgetItem: budgetItemReducer })
+    BudgetModule,
+    PiggyBankModule,
+    StoreModule.forRoot({})
   ],
   providers: [],
   bootstrap: [AppComponent]
