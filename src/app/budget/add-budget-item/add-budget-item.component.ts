@@ -36,7 +36,7 @@ export class AddBudgetItemComponent implements OnInit {
         this.itemAdded.emit(incomeItem);
         this.addBudgetItemForm.reset();
     }
-    
+
     private createForm() {
         this.addBudgetItemForm = this.fb.group({
             name: ['', Validators.required],
