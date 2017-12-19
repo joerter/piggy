@@ -1,11 +1,12 @@
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+
 import { BudgetItem, BudgetItemType } from './budget-item.model';
 import { Component, OnInit } from '@angular/core';
 import { Store, createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { CREATE_BUDGET_ITEM } from './budget-item.reducer';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
 
 @Component({
     selector: 'budget',
@@ -17,7 +18,7 @@ import 'rxjs/add/operator/map';
             <budget-item-list [budgetItems]="incomeItems$ | async"></budget-item-list>
 
             <div class="d-flex justify-content-center">
-                <add-budget-item (itemAdded)="onIncomeItemAdded($event)"></add-budget-item>
+                <add-budget-item (itemAdded)="handleIncomeItemAdded($event)"></add-budget-item>
             </div>
 
             <h3> Total: {{totalIncome | async | currency:'USD':true}}</h3>
@@ -28,7 +29,7 @@ import 'rxjs/add/operator/map';
             <budget-item-list [budgetItems]="expenseItems$ | async"></budget-item-list>
 
             <div class="d-flex justify-content-center">
-                <add-budget-item (itemAdded)="onExpenseItemAdded($event)"></add-budget-item>
+                <add-budget-item (itemAdded)="handleExpenseItemAdded($event)"></add-budget-item>
             </div>
 
             <h3>Total: {{totalExpenses | async | currency:'USD':true}}</h3>
@@ -61,19 +62,13 @@ export class BudgetComponent implements OnInit {
         return this.expenseItems$.map(items => items.reduce((sum, item) => sum + item.amount, 0));
     }
 
-    onIncomeItemAdded(budgetItem: BudgetItem) {
-        const incomeItem = { ...budgetItem, type: BudgetItemType.Income };
-        this.store.dispatch({
-            type: CREATE_BUDGET_ITEM,
-            payload: incomeItem
-        });
+    handleIncomeItemAdded(budgetItem: BudgetItem) {
+        const payload = { ...budgetItem, type: BudgetItemType.Income };
+        this.store.dispatch({ type: CREATE_BUDGET_ITEM, payload });
     }
 
-    onExpenseItemAdded(budgetItem: BudgetItem) {
-        const expenseItem = { ...budgetItem, type: BudgetItemType.Expense };
-        this.store.dispatch({
-            type: CREATE_BUDGET_ITEM,
-            payload: expenseItem
-        });
+    handleExpenseItemAdded(budgetItem: BudgetItem) {
+        const payload = { ...budgetItem, type: BudgetItemType.Expense };
+        this.store.dispatch({ type: CREATE_BUDGET_ITEM, payload });
     }
 }
