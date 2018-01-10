@@ -21,7 +21,10 @@ import { Observable } from 'rxjs';
                 <add-budget-item (itemAdded)="handleIncomeItemAdded($event)"></add-budget-item>
             </div>
 
-            <h3> Total: {{totalIncome | async | currency:'USD':true}}</h3>
+            <div class="total-row">
+                <h3>Total:</h3>
+                <h3>{{totalIncome | async | currency:'USD':true}}</h3>
+            </div>
         </div>
         <div class="col-md-6">
             <h2>Expenses</h2>
@@ -32,14 +35,21 @@ import { Observable } from 'rxjs';
                 <add-budget-item (itemAdded)="handleExpenseItemAdded($event)"></add-budget-item>
             </div>
 
-            <h3>Total: {{totalExpenses | async | currency:'USD':true}}</h3>
+            <div class="total-row">
+                <h3>Total:</h3>
+                <h3>{{totalExpenses | async | currency:'USD':true}}</h3>
+            </div>
         </div>
     </div>
   `,
     styles: [
         `h2 {
           text-align: center;
-      }`
+        }`,
+        `div.total-row {
+            display: flex;
+            justify-content: space-between;
+        }`
     ]
 })
 export class BudgetComponent implements OnInit {
