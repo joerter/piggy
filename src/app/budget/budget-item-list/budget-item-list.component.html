@@ -1,0 +1,7 @@
+<div class="card mb-2" *ngIf="budgetItems.length > 0">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let budgetItem of budgetItems">
+            {{budgetItem.name}} - {{budgetItem.amount}}
+        </li>
+    </ul>
+</div>

@@ -5,15 +5,7 @@ import { BudgetItem } from '../budget-item.model';
 
 @Component({
     selector: 'add-budget-item',
-    template: `
-    <form [formGroup]="addBudgetItemForm" (ngSubmit)="onSubmit()" novalidate class="form-inline">
-        <input type="text" class="form-control mr-2" placeholder="Name" formControlName="name" />
-        <input type="number" class="form-control mr-2" placeholder="Amount" formControlName="amount" />
-
-        <button type="submit" class="btn btn-secondary">Add</button>
-    </form>
-  `,
-    styles: [],
+    templateUrl: './add-budget-item.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddBudgetItemComponent implements OnInit {

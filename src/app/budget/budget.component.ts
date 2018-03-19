@@ -10,47 +10,8 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'budget',
-    template: `
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Income</h2>
-
-            <budget-item-list [budgetItems]="incomeItems$ | async"></budget-item-list>
-
-            <div class="d-flex justify-content-center">
-                <add-budget-item (itemAdded)="handleIncomeItemAdded($event)"></add-budget-item>
-            </div>
-
-            <div class="total-row">
-                <h3>Total:</h3>
-                <h3>{{totalIncome | async | currency:'USD':true}}</h3>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h2>Expenses</h2>
-
-            <budget-item-list [budgetItems]="expenseItems$ | async"></budget-item-list>
-
-            <div class="d-flex justify-content-center">
-                <add-budget-item (itemAdded)="handleExpenseItemAdded($event)"></add-budget-item>
-            </div>
-
-            <div class="total-row">
-                <h3>Total:</h3>
-                <h3>{{totalExpenses | async | currency:'USD':true}}</h3>
-            </div>
-        </div>
-    </div>
-  `,
-    styles: [
-        `h2 {
-          text-align: center;
-        }`,
-        `div.total-row {
-            display: flex;
-            justify-content: space-between;
-        }`
-    ]
+    templateUrl: './budget-component.html',
+    styleUrls: ['./budget.component.css']
 })
 export class BudgetComponent implements OnInit {
     expenseItems$: Observable<BudgetItem[]>;

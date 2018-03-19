@@ -7,28 +7,7 @@ import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'create-piggy-bank',
-    template: `
-    <h5>Create New Piggy Bank</h5>
-    <form [formGroup]="createPiggyBankForm" novalidate (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" formControlName="name" />
-      </div>
-
-      <div class="form-group">
-        <label for="amount">Starting Amount</label>
-        <input type="number" class="form-control" formControlName="amount" />
-      </div>
-
-      <div class="form-group">
-        <label for="goal">Goal (optional)</label>
-        <input type="number" class="form-control" formControlName="goal" />
-      </div>
-
-      <button type="submit" class="btn btn-primary">Create</button>
-    </form>
-  `,
-    styles: [],
+    templateUrl: './create-piggy-bank.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatePiggyBankComponent implements OnInit {
