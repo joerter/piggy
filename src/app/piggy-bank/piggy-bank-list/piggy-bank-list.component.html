@@ -1,4 +1,4 @@
-<div class="card mb-3" *ngFor="let piggyBank of piggyBanks$ | async">
+<div class="card mb-3" *ngFor="let piggyBank of piggyBanks">
     <h4 class="card-title text-center">{{piggyBank.name}}</h4>
 
     <h2 class="text-center">{{piggyBank.amount | currency:'USD':true}}</h2>

@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CREATE_PIGGY_BANK } from '../piggy-bank.reducer';
 import { PiggyBank } from '../piggy-bank.model';
-import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'create-piggy-bank',
@@ -11,9 +9,11 @@ import { Store } from '@ngrx/store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatePiggyBankComponent implements OnInit {
+    @Output() newPiggyBank = new EventEmitter<PiggyBank>();
+
     createPiggyBankForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private store: Store<any>) {}
+    constructor(private fb: FormBuilder) {}
 
     ngOnInit() {
         this.createForm();
@@ -28,10 +28,7 @@ export class CreatePiggyBankComponent implements OnInit {
             goal: formValue.goal
         };
 
-        this.store.dispatch({
-            type: CREATE_PIGGY_BANK,
-            payload: piggyBank
-        });
+        this.newPiggyBank.emit(piggyBank);
 
         this.createPiggyBankForm.reset();
     }

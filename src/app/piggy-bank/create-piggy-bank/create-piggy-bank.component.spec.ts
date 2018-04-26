@@ -1,27 +1,36 @@
-import { CREATE_PIGGY_BANK } from "../piggy-bank.reducer";
-import { CreatePiggyBankComponent } from "./create-piggy-bank.component";
-import { PiggyBank } from "../piggy-bank.model";
-import { Validators } from "@angular/forms";
+import { CREATE_PIGGY_BANK } from '../piggy-bank.reducer';
+import { CreatePiggyBankComponent } from './create-piggy-bank.component';
+import { PiggyBank } from '../piggy-bank.model';
+import { Validators } from '@angular/forms';
 
 describe('Create Piggy Bank Component', () => {
     let component: CreatePiggyBankComponent;
 
-    const formBuilderSpy = jasmine.createSpyObj('formBuilder', ['group']);
-    const storeSpy = jasmine.createSpyObj('store', ['dispatch']);
+    let createdFormGroup: any;
+    const formBuilderStub = <any>{
+        group: (formGroup) => { createdFormGroup = formGroup; }
+    };
+
+    let emittedPiggyBank: PiggyBank;
 
     beforeEach(() => {
-        component = new CreatePiggyBankComponent(formBuilderSpy, storeSpy);
+        createdFormGroup = undefined;
+
+        component = new CreatePiggyBankComponent(formBuilderStub);
+        component.newPiggyBank = <any>{
+            emit: (piggyBank: PiggyBank) => { emittedPiggyBank = piggyBank; }
+        };
     });
 
     describe('ngOnInit', () => {
         it('should create the form', () => {
             component.ngOnInit();
 
-            expect(formBuilderSpy.group).toHaveBeenCalledWith({
+            expect(createdFormGroup).toEqual({
                 name: ['', Validators.required],
                 amount: ['', Validators.required],
                 goal: ''
-            })
+            });
         });
     });
 
@@ -30,12 +39,12 @@ describe('Create Piggy Bank Component', () => {
             name: 'New Car',
             amount: 1234.56,
             goal: 123456.78
-        }
+        };
         beforeEach(() => {
             component.createPiggyBankForm = <any>{
                 value: formValue,
                 reset: jasmine.createSpy('reset')
-            }
+            };
         });
 
         it('should reset the form', () => {
@@ -44,20 +53,16 @@ describe('Create Piggy Bank Component', () => {
             expect(component.createPiggyBankForm.reset).toHaveBeenCalledTimes(1);
         });
 
-        it('should dispatch a CREATE_PIGGY_BANK action with a piggybank payload', () => {
+        it('should emit the created piggybank', () => {
             component.onSubmit();
 
-            const payload: PiggyBank = {
+            const piggyBank: PiggyBank = {
                 name: formValue.name,
                 amount: formValue.amount,
                 goal: formValue.goal
             };
-            const expectedAction = {
-                type: CREATE_PIGGY_BANK,
-                payload
-            };
 
-            expect(storeSpy.dispatch).toHaveBeenCalledWith(expectedAction);
+            expect(emittedPiggyBank).toEqual(piggyBank);
         });
     });
 });

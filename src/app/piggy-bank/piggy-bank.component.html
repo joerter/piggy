@@ -1,5 +1,9 @@
-<piggy-bank-list></piggy-bank-list>
+<piggy-bank-list
+    [piggyBanks]="piggyBanks"
+></piggy-bank-list>
 
 <hr/>
 
-<create-piggy-bank></create-piggy-bank>
+<create-piggy-bank
+    (newPiggyBank)="handleNewPiggyBank($event)"
+></create-piggy-bank>
